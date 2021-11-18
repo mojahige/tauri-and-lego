@@ -1,6 +1,6 @@
 module.exports = {
   sourceDir: "./bricks",
-  targetDir: "./dist/assets/bricks",
+  targetDir: "./public/assets/bricks",
   preStyle: `
   :host {
     box-sizing: border-box;

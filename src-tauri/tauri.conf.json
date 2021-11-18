@@ -4,9 +4,9 @@
     "version": "0.1.0"
   },
   "build": {
-    "distDir": "../dist",
-    "devPath": "../dist",
-    "beforeDevCommand": "",
+    "distDir": "../public",
+    "devPath": "http://localhost:5000",
+    "beforeDevCommand": "npm run serve",
     "beforeBuildCommand": ""
   },
   "tauri": {

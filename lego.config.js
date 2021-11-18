@@ -1,5 +1,5 @@
 module.exports = {
-  sourceDir: "./src",
+  sourceDir: "./bricks",
   targetDir: "./dist/assets/bricks",
   preStyle: `
   :host {

@@ -1,0 +1,21 @@
+<template>
+  <p>Test ${state.name}</p>
+</template>
+
+<script>
+  export default class extends Lego {
+    init() {
+      this.state = {
+        name: "Lego!!!",
+      };
+    }
+  }
+</script>
+
+<style>
+  p {
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+  }
+</style>

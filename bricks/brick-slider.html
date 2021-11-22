@@ -1,0 +1,139 @@
+<template>
+  <div part="container">
+    <div part="slider">
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default class extends Lego {
+    init() {
+      this.onControl = this.onControl.bind(this);
+
+      this.state = {
+        step: 2
+      };
+    }
+
+    connected() {
+      this.document.addEventListener('control', this.onControl);
+    }
+
+    disconnected() {
+      this.document.removeEventListener('control', this.onControl);
+    }
+
+    /**
+     * @param {CustomEvent} event
+     * @param {Object} event.detail
+     * @param {'next' | 'prev'} event.detail.type
+     **/
+    onControl({ detail }) {
+      detail.type && this.slide({
+        type: detail.type,
+        step: Number(this.state.step)
+      });
+    }
+
+    /**
+     * @param {'next' | 'prev'} event.detail.type
+     **/
+    slide({ type, step }) {
+      const items = Array.from(this.querySelectorAll('brick-slider-item'));
+      const position = this.getPosition({ items, step, type });
+
+      this.document.querySelector('[part="slider"]').scrollTo(position, 0);
+    }
+
+    /**
+     * @param {Object} payload
+     * @param {Array<Element>} payload.items
+     * @param {number} payload.step
+     * @param {'next' | 'prev'} payload.type
+     * @return {number}
+     **/
+    getPosition(payload) {
+      return payload.items[this.getIndex(payload)].offsetLeft;
+    }
+
+    /**
+     * @param {Object} payload
+     * @param {Array<Element>} payload.items
+     * @param {number} payload.step
+     * @param {'next' | 'prev'} payload.type
+     * @return {number}
+     **/
+    getIndex({ items, step, type }) {
+      const edgeItemIndex = this.getInViewEdgeItemIndex(items);
+      const targetIndex = edgeItemIndex + (type === 'next' ? step : step * -1);
+
+      if (targetIndex < 0) {
+        return 0;
+      }
+
+      if (targetIndex > items.length - 1) {
+        return items.length - 1;
+      }
+
+      return targetIndex;
+    }
+
+    /**
+     * @param {Array<Element>} items
+     * @return {number}
+     **/
+    getInViewEdgeItemIndex(items) {
+      const container = this.document.querySelector('[part="container"]');
+      const slider = this.document.querySelector('[part="slider"]');
+      const left = slider.scrollLeft;
+      const right = container.offsetWidth + left;
+
+      return items.findIndex(element => {
+        return element.offsetLeft >= left && element.offsetLeft + element.offsetWidth <= right;
+      });
+    }
+  }
+</script>
+
+<style>
+  div[part="container"] {
+    position: relative;
+    overflow: hidden;
+  }
+
+  div[part="slider"] {
+    display: flex;
+    column-gap: 16px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+  }
+
+  ::slotted(brick-slider-item) {
+    flex-shrink: 0;
+    width: 25%;
+    scroll-snap-align: start;
+  }
+
+  ::slotted(brick-slider-button) {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  ::slotted(brick-slider-button[type="next"]),
+  ::slotted(brick-slider-button[type="prev"]) {
+    display: block;
+  }
+
+  ::slotted(brick-slider-button[type="next"]) {
+    right: 8px;
+  }
+
+  ::slotted(brick-slider-button[type="prev"]) {
+    left: 8px;
+  }
+</style>

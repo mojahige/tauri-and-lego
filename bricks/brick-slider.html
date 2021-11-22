@@ -42,9 +42,13 @@
      **/
     slide({ type, step }) {
       const items = Array.from(this.querySelectorAll("brick-slider-item"));
-      const position = this.getPosition({ items, step, type });
+      const left = this.getPosition({ items, step, type });
 
-      this.document.querySelector('[part="slider"]').scrollTo(position, 0);
+      this.document.querySelector('[part="slider"]').scrollTo({
+        top: 0,
+        left,
+        behavior: "smooth",
+      });
     }
 
     /**

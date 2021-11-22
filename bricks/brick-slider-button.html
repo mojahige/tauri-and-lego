@@ -8,17 +8,17 @@
   export default class extends Lego {
     init() {
       this.state = {
-        type: 'next',
+        type: "next",
       };
     }
 
     onClick() {
-      const event = new CustomEvent('control', {
+      const event = new CustomEvent("control", {
         bubbles: true,
         composed: true,
         detail: {
           type: this.state.type,
-        }
+        },
       });
 
       this.dispatchEvent(event);

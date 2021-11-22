@@ -12,16 +12,16 @@
       this.onControl = this.onControl.bind(this);
 
       this.state = {
-        step: 2
+        step: 2,
       };
     }
 
     connected() {
-      this.document.addEventListener('control', this.onControl);
+      this.document.addEventListener("control", this.onControl);
     }
 
     disconnected() {
-      this.document.removeEventListener('control', this.onControl);
+      this.document.removeEventListener("control", this.onControl);
     }
 
     /**
@@ -30,17 +30,18 @@
      * @param {'next' | 'prev'} event.detail.type
      **/
     onControl({ detail }) {
-      detail.type && this.slide({
-        type: detail.type,
-        step: Number(this.state.step)
-      });
+      detail.type &&
+        this.slide({
+          type: detail.type,
+          step: Number(this.state.step),
+        });
     }
 
     /**
      * @param {'next' | 'prev'} event.detail.type
      **/
     slide({ type, step }) {
-      const items = Array.from(this.querySelectorAll('brick-slider-item'));
+      const items = Array.from(this.querySelectorAll("brick-slider-item"));
       const position = this.getPosition({ items, step, type });
 
       this.document.querySelector('[part="slider"]').scrollTo(position, 0);
@@ -66,7 +67,7 @@
      **/
     getIndex({ items, step, type }) {
       const edgeItemIndex = this.getInViewEdgeItemIndex(items);
-      const targetIndex = edgeItemIndex + (type === 'next' ? step : step * -1);
+      const targetIndex = edgeItemIndex + (type === "next" ? step : step * -1);
 
       if (targetIndex < 0) {
         return 0;
@@ -89,8 +90,11 @@
       const left = slider.scrollLeft;
       const right = container.offsetWidth + left;
 
-      return items.findIndex(element => {
-        return element.offsetLeft >= left && element.offsetLeft + element.offsetWidth <= right;
+      return items.findIndex((element) => {
+        return (
+          element.offsetLeft >= left &&
+          element.offsetLeft + element.offsetWidth <= right
+        );
       });
     }
   }

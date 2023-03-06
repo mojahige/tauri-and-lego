@@ -41,3 +41,4 @@ Cargo.lock
 *.pdb
 
 public/assets/javascripts/bricks
+.DS_Store

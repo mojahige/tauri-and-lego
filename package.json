@@ -9,11 +9,11 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@polight/lego": "^1.6.6",
-    "@tauri-apps/cli": "^1.0.0-rc.4",
-    "http-server": "^14.0.0"
+    "@polight/lego": "^1.8.5",
+    "@tauri-apps/cli": "^1.2.3",
+    "http-server": "^14.1.1"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.0.0-rc.1"
+    "@tauri-apps/api": "^1.2.0"
   }
 }

@@ -4,7 +4,8 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:3000",
-    "distDir": "../public"
+    "distDir": "../public",
+    "withGlobalTauri": true
   },
   "package": {
     "productName": "tauri-and-lego",

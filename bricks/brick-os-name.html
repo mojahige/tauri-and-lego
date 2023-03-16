@@ -1,0 +1,32 @@
+<template>
+  <p>${state.osName}</p>
+</template>
+
+<script>
+  const { invoke } = window.__TAURI__.tauri;
+
+  export default class extends Lego {
+    async init() {
+      this.state = {
+        osName: ""
+      };
+
+      const osName = await invoke('os_name');
+
+      this.render({ osName: this.getDisplayOsName(osName) });
+    }
+
+    /**
+     * @param {string} osName
+     * @returns {string}
+     */
+    getDisplayOsName(osName) {
+      switch (osName) {
+        case 'linux': return 'Linux 🐧';
+        case 'windows': return 'Windows 🪟';
+        case 'macos': return 'macOS 🍎';
+        default: return `${osName} 💻`;
+      }
+    }
+  }
+</script>
